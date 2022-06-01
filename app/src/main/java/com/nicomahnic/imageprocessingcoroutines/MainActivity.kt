@@ -13,7 +13,10 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
-    private val IMAGE_URL = "https://raw.githubusercontent.com/nmahnic/ImageProcessingCoroutines/master/app/provider/dog.png"
+    companion object {
+        private const val IMAGE_URL = "https://raw.githubusercontent.com/nmahnic/ImageProcessingCoroutines/master/app/provider/dog.png"
+    }
+
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,14 +44,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        getBitmapByGlide()
+
     }
 
     private fun getBitmapByGlide(){
         Glide.with(this)
             .load(IMAGE_URL)
             .centerCrop()
-            .into(imageView)
-        imageView.visibility = View.VISIBLE
+            .into(imageView2)
+        imageView2.visibility = View.VISIBLE
     }
 
     private fun getOriginalBitmap() =
@@ -56,11 +61,13 @@ class MainActivity : AppCompatActivity() {
             BitmapFactory.decodeStream(it)
         }
 
-    private fun applyFilter(originalBitmap: Bitmap) = Filter.apply(originalBitmap)
+    private fun applyFilter(originalBitmap: Bitmap) : Bitmap {
+        return Filter.apply(originalBitmap)
+    }
 
     private fun loadImage(bmp: Bitmap) {
         progressBar.visibility = View.GONE
-        imageView.setImageBitmap(bmp)
-        imageView.visibility = View.VISIBLE
+        imageView1.setImageBitmap(bmp)
+        imageView1.visibility = View.VISIBLE
     }
 }

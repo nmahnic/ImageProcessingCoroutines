@@ -3,6 +3,7 @@ package com.nicomahnic.imageprocessingcoroutines
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -12,7 +13,7 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
-    private val IMAGE_URL = "https://raw.githubusercontent.com/DevTides/JetpackDogsApp/master/app/src/main/res/drawable/dog.png"
+    private val IMAGE_URL = "https://raw.githubusercontent.com/nmahnic/ImageProcessingCoroutines/master/app/provider/dog.png"
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +23,10 @@ class MainActivity : AppCompatActivity() {
         btnStart.setOnClickListener {
             coroutineScope.launch {
                 val originalDataDeferred = coroutineScope.async(Dispatchers.IO) {
-                    RetrofitClient.service.getAnimals()
+                    RetrofitClient.service.getAnimal()
                 }
                 val originalData = originalDataDeferred.await()
-                println(originalData)
-//                loadImage(originalBitmap)
+                Log.e("NM","$originalData")
 
 //                val originalDeferred = coroutineScope.async(Dispatchers.IO) { getOriginalBitmap() }
 //                val originalBitmap = originalDeferred.await()
